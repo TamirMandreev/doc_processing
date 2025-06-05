@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework', # Подключить Django REST Framework
+    'users', # Подключить приложение users
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Указать основную модель пользователя в проекте
+AUTH_USER_MODEL = 'users.User'
