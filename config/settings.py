@@ -2,6 +2,10 @@
 # Он позволяет выполнять множество системных операций прямо из Python-кода
 import os
 
+# Класс timedelta используется для работы с промежутками времени
+# Объект этого класса представляет длительность (разницу между двумя датами или временем)
+from datetime import timedelta
+
 # Функция load_dotenv используется для загрузки переменных окружения из файла .env
 # в текущее окружения Python
 from dotenv import load_dotenv
@@ -41,7 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework', # Подключить Django REST Framework
+    'rest_framework_simplejwt', # Подключить JWT-аутентификацию
     'users', # Подключить приложение users
+
 ]
 
 MIDDLEWARE = [
@@ -132,3 +138,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Указать основную модель пользователя в проекте
 AUTH_USER_MODEL = 'users.User'
+
+# Настроить DRF для использования JWT-аутентификации через библиотеку rest_framework_simplejwt
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
+
+# Настроить время жизни JWT-токенов
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7), # Срок жизни access token
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7), # Срок жизни refresh token
+}
