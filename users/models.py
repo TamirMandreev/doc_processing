@@ -35,7 +35,7 @@ class UserManager(BaseUserManager):
 
     # Создать публичный интерфейс для создания суперпользователя
     def create_superuser(self, email, password, **extra_fields):
-        # У пользователя по умолчанию прав суперпользователя
+        # У пользователя по умолчанию права суперпользователя
         extra_fields.setdefault('is_superuser', True)
         # У пользователя по умолчанию есть доступ к административной панели Django
         extra_fields.setdefault('is_staff', True)
