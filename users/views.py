@@ -12,3 +12,11 @@ class UserCreateAPIView(CreateAPIView):
     # Указать сериализатор
     serializer_class = UserSerializer
 
+    # Переопределить стандартное поведение при создании новых объектов
+    def perform_create(self, serializer):
+        # Создать новый объект в базе данных
+        user = serializer.save(is_active=True)
+        # Захэшировать пароль
+        user.set_password(user.password)
+        # Сохранить пользователя с захешированным паролем
+        user.save()
