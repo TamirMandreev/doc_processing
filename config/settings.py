@@ -6,6 +6,7 @@ import os
 # Объект этого класса представляет длительность (разницу между двумя датами или временем)
 from datetime import timedelta
 
+from django.conf.global_settings import MEDIA_URL, MEDIA_ROOT
 # Функция load_dotenv используется для загрузки переменных окружения из файла .env
 # в текущее окружения Python
 from dotenv import load_dotenv
@@ -151,3 +152,8 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7), # Срок жизни access token
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7), # Срок жизни refresh token
 }
+
+# URL-адрес, по которому будут доступны документы
+MEDIA_URL = '/media/'
+# Абсолютный путь к директории на сервере, где Django будет сохранять загруженные пользователями файлы
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
