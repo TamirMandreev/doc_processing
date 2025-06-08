@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework', # Подключить Django REST Framework
     'rest_framework_simplejwt', # Подключить JWT-аутентификацию
     'users', # Подключить приложение users
+    'documents', # Подключить приложение documents
 
 ]
 
