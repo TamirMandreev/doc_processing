@@ -1,3 +1,16 @@
-from django.shortcuts import render
+# Generic-классы - это набор готовых представлений (views), которые упрощают создание стандартных CRUD-операций
+from rest_framework.generics import CreateAPIView
+
+from documents.serializers import DocumentSerializer
+
 
 # Create your views here.
+
+# Создать представление для загрузки документа
+class DocumentCreateAPIView(CreateAPIView):
+    serializer_class = DocumentSerializer
+
+    # Добавить автоматическое заполнение поля user (пользователь, загрузивший документ)
+    def perform_create(self, serializer):
+        # Сохранить объект в базу данных, заполнив поле user
+        serializer.save(user=self.request.user)
