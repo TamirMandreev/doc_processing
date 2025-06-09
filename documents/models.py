@@ -24,7 +24,7 @@ class Document(models.Model):
     # Комментарий администратора
     admin_comment = models.TextField(blank=True, null=True)
     # Пользователь, загрузивший документ
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     # Дата и время загрузки документа
     uploaded_at = models.DateTimeField(auto_now_add=True)
     # Дата и время обработки документа
