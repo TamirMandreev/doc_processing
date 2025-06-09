@@ -1,6 +1,8 @@
 # Generic-классы - это набор готовых представлений (views), которые упрощают создание стандартных CRUD-операций
 # для моделей Django
 from rest_framework.generics import CreateAPIView
+# AllowAny разрешает доступ к API всем пользователям, включая анонимных (неаутентифицированных)
+from rest_framework.permissions import AllowAny
 
 # Импортировать модель пользователя
 from users.models import User
@@ -11,6 +13,8 @@ from users.serializers import UserSerializer
 class UserCreateAPIView(CreateAPIView):
     # Указать сериализатор
     serializer_class = UserSerializer
+    # Сделать API-эндпоинт доступным всем пользователям
+    permission_classes = [AllowAny]
 
     # Переопределить стандартное поведение при создании новых объектов
     def perform_create(self, serializer):

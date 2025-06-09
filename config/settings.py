@@ -141,10 +141,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Указать основную модель пользователя в проекте
 AUTH_USER_MODEL = 'users.User'
 
-# Настроить DRF для использования JWT-аутентификации через библиотеку rest_framework_simplejwt
+# REST_FRAMEWORK - словарь настроек Django REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # По умолчанию используется JWT-аутентификация
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated', # По умолчанию для доступа к API-эндпоинтам пользователь должен быть аутентифицирован
     ]
 }
 
