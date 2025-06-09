@@ -1,5 +1,5 @@
 import pytest
-# reverse получапет URL по имени маршрута
+# reverse получает URL по имени маршрута
 from django.urls import reverse
 # status предоставляет удобные константы для HTTP статус-кодов вместо "магических чисел"
 from rest_framework import status
@@ -49,7 +49,7 @@ def test_user_create_success(api_client, valid_user_data):
     assert len(user.password) > 30 # Проверка на хэш
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db # Разрешить доступ к базе данных для этого теста
 def test_user_create_failure(api_client):
     '''
     Тестирует ошибку при создании пользователя
