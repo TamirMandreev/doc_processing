@@ -172,3 +172,12 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
 # URL Redis-сервера для хранения результатов выполненных задач
 CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
+
+# Настройки почты mail.ru
+# Использовать SMTP-сервер для отправки email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # django.core.mail.backends.console.EmailBackend
+EMAIL_HOST = os.getenv('EMAIL_HOST') # Сервер для отправки email
+EMAIL_PORT = os.getenv('EMAIL_PORT') # Порт
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL') == 'True' # Должно ли SMTP-соединение использовать SSL-шифрование (True или False)
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER') # Email для аутентификации на SMTP-сервере
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') # Пароль внешнего приложения для аутентификации на SMTP-сервере
