@@ -1,5 +1,6 @@
 # Импортировать настройки Django
 from celery import shared_task
+# Импортировать настройки проекта
 from django.conf import settings
 # send_mail отправляет электронное письмо с использованием настроек почтового сервера, указанных в settings.py
 from django.core.mail import send_mail

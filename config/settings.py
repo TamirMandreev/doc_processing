@@ -182,3 +182,4 @@ EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL') == 'True' # Должно ли SMTP-с
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER') # Email для аутентификации на SMTP-сервере
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') # Пароль внешнего приложения для аутентификации на SMTP-сервере
 ADMIN_EMAIL = os.getenv('ADMIN_EMAIL') # Email администратора (туда будут приходиться уведомления о загрузке документов)
+ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD') # Пароль для входа в учетную запись администратора внутри текущего приложения
