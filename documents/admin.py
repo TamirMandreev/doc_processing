@@ -28,10 +28,10 @@ class DocumentAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
         # Если статус изменился на 'approved'
         if change and 'status' in form.changed_data and obj.status == 'approved':
-            send_document_confirmation_notification(obj.user.email, obj.admin_comment).delay()
+            send_document_confirmation_notification.delay(obj.user.email, obj.admin_comment)
         # Если статус изменился на 'rejected'
         elif change and 'status' in form.changed_data and obj.status == 'rejected':
-            send_document_rejection_notification(obj.user.email, obj.admin_comment).delay()
+            send_document_rejection_notification.delay(obj.user.email, obj.admin_comment)
 
     # Определить права доступа к модели Document
     def has_view_permission(self, request, obj=None):
