@@ -7,4 +7,4 @@ from documents.models import Document
 class DocumentSerializer(ModelSerializer):
     class Meta:
         model = Document
-        fields = '__all__'
+        fields = "__all__"

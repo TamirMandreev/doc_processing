@@ -1,6 +1,4 @@
 # Generic-классы - это набор готовых представлений (views), которые упрощают создание стандартных CRUD-операций
-import os
-
 from rest_framework.generics import CreateAPIView
 
 from documents.serializers import DocumentSerializer
@@ -8,6 +6,7 @@ from documents.tasks import send_document_upload_notification
 
 
 # Create your views here.
+
 
 # Создать представление для загрузки документа
 class DocumentCreateAPIView(CreateAPIView):

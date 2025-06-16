@@ -15,20 +15,45 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Document',
+            name="Document",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=255)),
-                ('file', models.FileField(upload_to='documents/')),
-                ('status', models.CharField(choices=[('pending', 'На рассмотрении'), ('approved', 'Подтвержден'), ('rejected', 'Отклонен')], default='pending', max_length=10)),
-                ('admin_comment', models.TextField(blank=True, null=True)),
-                ('uploaded_at', models.DateTimeField(auto_now_add=True)),
-                ('processed_at', models.DateTimeField(blank=True, null=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                ("file", models.FileField(upload_to="documents/")),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("pending", "На рассмотрении"),
+                            ("approved", "Подтвержден"),
+                            ("rejected", "Отклонен"),
+                        ],
+                        default="pending",
+                        max_length=10,
+                    ),
+                ),
+                ("admin_comment", models.TextField(blank=True, null=True)),
+                ("uploaded_at", models.DateTimeField(auto_now_add=True)),
+                ("processed_at", models.DateTimeField(blank=True, null=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Документ',
-                'verbose_name_plural': 'Документы',
+                "verbose_name": "Документ",
+                "verbose_name_plural": "Документы",
             },
         ),
     ]

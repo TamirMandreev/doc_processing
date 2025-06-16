@@ -1,7 +1,9 @@
 from django.db import models
+
 # AbstractUser - абстрактный класс, который включает все стандартные поля Django-модели User
 # BaseUserManager - это класс, который предоставляет основные методы для создания и управления пользователями
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+
 
 # Создать кастомный менеджер для модели User
 class UserManager(BaseUserManager):
@@ -12,7 +14,7 @@ class UserManager(BaseUserManager):
     # Метод не предназначен для прямого вызова извне - только внутри менеджера
     def _create_user(self, email, password, **extra_fields):
         if not email:
-            raise ValueError('Пользователи должны иметь email')
+            raise ValueError("Пользователи должны иметь email")
         # Привести домен email к нижнему регистру
         email = self.normalize_email(email)
         # Создать объект пользователя
@@ -27,33 +29,36 @@ class UserManager(BaseUserManager):
     # Создать публичный интерфейс для создания обычного (не административного) пользователя
     def create_user(self, email, password=None, **extra_fields):
         # У пользователя по умолчанию нет прав суперпользователя
-        extra_fields.setdefault('is_superuser', False)
+        extra_fields.setdefault("is_superuser", False)
         # У пользователя по умолчанию нет доступа к административной панели Django
-        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault("is_staff", False)
         # Создать пользователя через приватный метод
         return self._create_user(email, password, **extra_fields)
 
     # Создать публичный интерфейс для создания суперпользователя
     def create_superuser(self, email, password, **extra_fields):
         # У пользователя по умолчанию права суперпользователя
-        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault("is_superuser", True)
         # У пользователя по умолчанию есть доступ к административной панели Django
-        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault("is_staff", True)
 
         # Добавить проверки. Защита от явной передачи False
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Суперпользователь должен иметь is_superuser=True.')
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Суперпользователь должен иметь is_staff=True.')
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Суперпользователь должен иметь is_superuser=True.")
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Суперпользователь должен иметь is_staff=True.")
 
         # Создать пользователя через приватный метод
         return self._create_user(email, password, **extra_fields)
+
 
 # Создать кастомную модель пользователя
 class User(AbstractUser):
     # Удалить поле username из модели
     username = None
-    email = models.EmailField(unique=True, verbose_name="Email", help_text="Укажите email")
+    email = models.EmailField(
+        unique=True, verbose_name="Email", help_text="Укажите email"
+    )
 
     # Использовать поле email в качестве уникального идентификатора пользователя (вместо стандартного username)
     USERNAME_FIELD = "email"
@@ -69,5 +74,5 @@ class User(AbstractUser):
         return self.email
 
     class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"

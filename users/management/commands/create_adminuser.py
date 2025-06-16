@@ -1,9 +1,11 @@
 # Кастомные управляющие команды создаются через класс BaseCommand
 from django.core.management import BaseCommand
+
 # Импортировать настройки проекта
 from django.conf import settings
 
 from users.models import User
+
 
 # Создать команду для создания администратора
 class Command(BaseCommand):
@@ -17,6 +19,12 @@ class Command(BaseCommand):
             user.is_active = True
             user.set_password(settings.ADMIN_PASSWORD)
             user.save()
-            self.stdout.write(self.style.SUCCESS(f'Администратор {settings.ADMIN_EMAIL} создан!'))
+            self.stdout.write(
+                self.style.SUCCESS(f"Администратор {settings.ADMIN_EMAIL} создан!")
+            )
         else:
-            self.stdout.write(self.style.WARNING(f'Администратор {settings.ADMIN_EMAIL} уже существует!'))
+            self.stdout.write(
+                self.style.WARNING(
+                    f"Администратор {settings.ADMIN_EMAIL} уже существует!"
+                )
+            )
