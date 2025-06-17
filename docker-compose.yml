@@ -25,9 +25,9 @@ services:
   db: # Имя сервиса, под которым он будет доступен внутри Docker-сети
     image: postgres:16.0 # Использовать образ PostgreSQL версии 16.0
     environment:
-      POSTGRES_DB: doc_processing
-      POSTGRES_USER: tamir
-      POSTGRES_PASSWORD: 14032712
+      POSTGRES_DB: doc_processing # Создает базу данных с именем doc_processing
+      POSTGRES_USER: tamir # Создает пользователя PostgreSQL с именем tamir с правами суперпользователя
+      POSTGRES_PASSWORD: 14032712 # Устанавливает пароль для пользователя tamir
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     ports:
