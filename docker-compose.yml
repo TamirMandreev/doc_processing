@@ -1,0 +1,68 @@
+version: '3.9' # Версия Docker Compose
+
+# Перечислить сервисы, необходимые для запуска приложения
+services:
+  # Основное приложение Django + DRF
+  web: # Имя сервиса, под которым он будет доступен внутри Docker-сети
+    build: . # Собрать Docker-образ из Dockerfile, находящийся в текущей директории
+    command: > 
+      bash -c "python manage.py makemigrations &&
+              python manage.py migrate &&
+              python manage.py runserver 0.0.0.0:8000"
+    volumes: # Синхронизировать файлы на хосте с файлами в контейнере и обрабно
+      - .:/app
+    ports: # Пробросить порты между хостом (вашим компьютером) и контейнером
+      - "8000:8000"
+    env_file: # Передать переменные окружения в контейнер из .env файла
+      - .env
+    depends_on:
+      - db  # Дождаться запуска сервиса db
+      - redis # Дождаться запуска сервиса redis
+    networks: # Имя docker-сети, к которой подключен этот сервис
+      - app_network
+
+  # PostgreSQL сервис
+  db: # Имя сервиса, под которым он будет доступен внутри Docker-сети
+    image: postgres:16.0 # Использовать образ PostgreSQL версии 16.0
+    environment:
+      POSTGRES_DB: doc_processing
+      POSTGRES_USER: tamir
+      POSTGRES_PASSWORD: 14032712
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    networks:
+      - app_network
+
+  redis: # Имя сервиса, под которым он будет доступен внутри Docker-сети
+    image: redis:6
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app_network
+
+  # Celery worker
+  celery_worker:
+    build: .
+    command: celery -A config.celery:app worker --loglevel=info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+      - web
+    networks:
+      - app_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  app_network: # Создать изолированное сетевое пространство для контейнеров
+    driver: bridge
