@@ -17,3 +17,8 @@
 8. Запустить worker (рабочий процесс) Celery
 9. Создать администратора командой 'python manage.py create_adminuser'
 
+## Установка и настройка в Docker-контейнере 
+1. Создать файл .env, скопировать в него содержимое файла .env.example и заполнить значения переменных 
+2. Открыть файл docker-compose.yml, заполнить переменные окружения базы данных (POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD)
+3. Запустить docker compose
+
