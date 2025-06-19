@@ -16,8 +16,10 @@ services:
     env_file: # Передать переменные окружения в контейнер из .env файла
       - .env
     depends_on:
-      - db  # Дождаться запуска сервиса db
-      - redis # Дождаться запуска сервиса redis
+      db:  # Дождаться запуска сервиса db
+        condition: service_healthy # Ждем, пока БД не станет healthy
+      redis: # Дождаться запуска сервиса redis
+        condition: service_started # Ждем просто запуска контейнера
     networks: # Имя docker-сети, к которой подключен этот сервис
       - app_network
 
@@ -32,6 +34,12 @@ services:
       - .env
     networks:
       - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"] # pg_isready проверяет состояние сервера
+      interval: 5s # Проверка каждые 5 секунд
+      timeout: 5s # Максимальное время ожидания ответа
+      retries: 5 # Количество попыток перед пометкой unhealthy
+      start_period: 10s # Время на инициализацию PostgreSQL перед первой проверкой
 
   redis: # Имя сервиса, под которым он будет доступен внутри Docker-сети
     image: redis:6
