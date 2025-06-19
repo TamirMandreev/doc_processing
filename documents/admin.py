@@ -14,7 +14,6 @@ class DocumentAdmin(admin.ModelAdmin):
     # Отобразить в списке пользователей следующие поля
     list_display = (
         "pk",
-        "title",
         "user",
         "file",
         "uploaded_at",
@@ -27,7 +26,6 @@ class DocumentAdmin(admin.ModelAdmin):
     # Определить, какие поля будут отображаться в форме
     def get_fields(self, request, obj=None):
         return [
-            "title",
             "user",
             "file",
             "admin_comment",
@@ -38,7 +36,7 @@ class DocumentAdmin(admin.ModelAdmin):
 
     # Определить поля только для чтения
     def get_readonly_fields(self, request, obj=None):
-        return ["title", "user", "file", "uploaded_at", "processed_at"]
+        return ["user", "file", "uploaded_at", "processed_at"]
 
     # Переопределить метод сохранения объекта
     def save_model(self, request, obj, form, change):

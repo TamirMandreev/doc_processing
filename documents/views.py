@@ -1,5 +1,7 @@
 # Generic-классы - это набор готовых представлений (views), которые упрощают создание стандартных CRUD-операций
+from rest_framework import status
 from rest_framework.generics import CreateAPIView
+from rest_framework.response import Response
 
 from documents.serializers import DocumentSerializer
 from documents.tasks import send_document_upload_notification
@@ -11,6 +13,19 @@ from documents.tasks import send_document_upload_notification
 # Создать представление для загрузки документа
 class DocumentCreateAPIView(CreateAPIView):
     serializer_class = DocumentSerializer
+
+    # При загрузке документа пользователь в ответ получает id созданной записи в БД
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            {'id': serializer.instance.id},
+            status=status.HTTP_201_CREATED,
+            headers=headers
+        )
 
     # Добавить автоматическое заполнение поля user (пользователь, загрузивший документ)
     def perform_create(self, serializer):

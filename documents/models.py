@@ -16,8 +16,6 @@ class Document(models.Model):
         ("rejected", "Отклонен"),
     ]
 
-    # Название документа
-    title = models.CharField(max_length=255)
     # В этом поле будет храниться путь к файлу (документу)
     file = models.FileField(upload_to="documents/")
     # Статус документа
@@ -31,8 +29,6 @@ class Document(models.Model):
     # Дата и время обработки документа
     processed_at = models.DateTimeField(blank=True, null=True)
 
-    def __str__(self):
-        return f"{self.title} ({self.get_status_display()})"
 
     class Meta:
         verbose_name = "Документ"
