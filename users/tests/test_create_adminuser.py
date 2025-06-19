@@ -87,7 +87,7 @@ def test_create_user_without_email(user_manager):
 @pytest.mark.django_db  # Разрешить доступ к базе данных для этого теста
 def test_create_superuser_without_staff_flag(user_manager):
     """
-    Тестирует создание суперпользователя без указания is_superuser=True
+    Тестирует создание суперпользователя с is_staff=False
     :return:
     """
 
@@ -102,7 +102,7 @@ def test_create_superuser_without_staff_flag(user_manager):
 @pytest.mark.django_db  # Разрешить доступ к базе данных для этого теста
 def test_create_superuser_without_superuser_flag(user_manager):
     """
-    Тестирует создание суперпользователя без указания is_superuser=True, is_staff=True
+    Тестирует создание суперпользователя с is_superuser=False
     :return:
     """
 
