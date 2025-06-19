@@ -8,3 +8,4 @@ class DocumentSerializer(ModelSerializer):
     class Meta:
         model = Document
         fields = ['id', 'file']
+

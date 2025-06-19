@@ -1,8 +1,9 @@
 # Generic-классы - это набор готовых представлений (views), которые упрощают создание стандартных CRUD-операций
 from rest_framework import status
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.response import Response
 
+from documents.models import Document
 from documents.serializers import DocumentSerializer
 from documents.tasks import send_document_upload_notification
 
@@ -34,3 +35,13 @@ class DocumentCreateAPIView(CreateAPIView):
 
         # Отправить администратору уведомление о том, что пользователь загрузил документ
         send_document_upload_notification(self.request.user.email)
+
+
+# Создать представление для просмотра списка документов
+class DocumentListAPIView(ListAPIView):
+    serializer_class = DocumentSerializer
+
+    # Пользовать видит только свои документы со статусо "Подтвержден"
+    def get_queryset(self):
+        documents = Document.objects.filter(user=self.request.user, status='approved')
+        return documents
