@@ -50,7 +50,7 @@ def test_save_model(mock_reject_task, mock_confirm_task, document_admin, admin_u
     """
     # Создать тестовый документ
     document = Document.objects.create(
-        title="Test Document", file="test.pdf", user=admin_user
+        file="test.pdf", user=admin_user
     )
 
     # Создать "фейковую" (поддельную) форму Django

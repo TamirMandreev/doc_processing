@@ -31,15 +31,12 @@ def file():
 @pytest.mark.django_db  # Разрешить доступ к базе данных для этого теста
 def test_document_creation(user, file):
     document = Document.objects.create(
-        title="Test Document",
         file=file,
         user=user,
     )
 
-    assert document.title == "Test Document"
     assert document.file is not None
     assert document.status == "pending"
     assert document.user == user
     assert document.uploaded_at is not None
     assert document.processed_at is None
-    assert str(document) == "Test Document (На рассмотрении)"

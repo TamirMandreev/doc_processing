@@ -49,7 +49,6 @@ def test_document_create_success(api_client, valid_document_data, user):
 
     # Проверить созданный документ
     document = Document.objects.first()
-    assert document.title == valid_document_data["title"]
     assert document.file is not None
     assert document.status == "pending"
     assert document.admin_comment is None
